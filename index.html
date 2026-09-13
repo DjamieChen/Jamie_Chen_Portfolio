@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO -->
+  <title>Jamie's Portfolio — Interactive Experience</title>
+  <meta name="description" content="Explore Jamie's portfolio through an interactive avatar-guided experience. DECA ICDC, consulting, marketing, and more.">
+  <meta name="author" content="Jamie">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Jamie's Portfolio">
+  <meta property="og:description" content="An interactive avatar-guided portfolio experience.">
+  <meta property="og:type" content="website">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Favicon — simple emoji favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌟</text></svg>">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       PHASE 1 — Intro: Text Flipping Board
+       ═══════════════════════════════════════ -->
+  <div id="intro-screen">
+    <div id="board-container"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       PHASE 2+ — Avatar Stage
+       ═══════════════════════════════════════ -->
+  <div id="avatar-stage">
+    <div id="avatar-container" class="avatar-container">
+      <div class="avatar-glow"></div>
+      <!-- Sleepy Avatar Image (Idle mode after 1 minute) -->
+      <img src="assets/sleepy.png" id="avatar-sleepy-img" class="avatar-sleepy-img" alt="Sleepy Avatar" />
+      <!-- Angry Avatar Image (When user blocks sound permission) -->
+      <img src="assets/angry.png" id="avatar-angry-img" class="avatar-angry-img" alt="Angry Avatar" />
+      <div id="zzz-container" class="zzz-container">
+        <span class="z z-1">Z</span>
+        <span class="z z-2">z</span>
+        <span class="z z-3">Z</span>
+        <span class="z z-4">z</span>
+      </div>
+      <!-- Avatar SVG inserted by avatar.js -->
+      <!-- Speech bubble inserted by bubbles.js -->
+      <!-- Link bubbles inserted by bubbles.js -->
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       Audio
+       ═══════════════════════════════════════ -->
+  <audio id="bg-music" loop preload="auto" autoplay>
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- ═══════════════════════════════════════
+       Reactive Music Play/Pause Button (Uiverse.io Ripple)
+       ═══════════════════════════════════════ -->
+  <div id="music-btn" class="loader music-btn paused" title="Play / Pause Music" role="button" aria-label="Play or pause music">
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="logo">
+      <svg id="music-icon" viewBox="0 0 24 24">
+        <!-- Paused state shows Play triangle ▶ -->
+        <polygon id="play-symbol" points="7,4 20,12 7,20" />
+        <!-- Playing state shows Pause bars ❚❚ -->
+        <g id="pause-symbol" style="display: none;">
+          <rect x="6" y="4" width="3.5" height="16" rx="1.5" />
+          <rect x="14.5" y="4" width="3.5" height="16" rx="1.5" />
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       Hamster in Wheel (Uiverse.io by Nawsome)
+       ═══════════════════════════════════════ -->
+  <div id="hamster-runner" title="Running hamster!">
+    <div class="wheel-and-hamster" role="img" aria-label="Orange and tan hamster running in a metal wheel">
+      <div class="wheel"></div>
+      <div class="hamster-flip" id="hamster-flip">
+        <div class="hamster">
+          <div class="hamster__body">
+            <div class="hamster__head">
+              <div class="hamster__neck"></div>
+              <div class="hamster__ear"></div>
+              <div class="hamster__eye"></div>
+              <div class="hamster__nose"></div>
+            </div>
+            <div class="hamster__limb hamster__limb--fr"></div>
+            <div class="hamster__limb hamster__limb--fl"></div>
+            <div class="hamster__limb hamster__limb--br"></div>
+            <div class="hamster__limb hamster__limb--bl"></div>
+            <div class="hamster__tail"></div>
+          </div>
+        </div>
+      </div>
+      <div class="spoke"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       Contact Remote Control (Uiverse.io by byllzz)
+       ═══════════════════════════════════════ -->
+  <div id="contact-remote-container" class="contact-remote">
+    <div id="remote-toast" class="remote-toast">Turn remote ON first! ⚡</div>
+    <input type="checkbox" id="remote-toggle" class="toggle-input" />
+    <div class="device">
+      <div class="bumper top-bumper"></div>
+      <div class="bumper bot-bumper"></div>
+
+      <!-- Top controls btns -->
+      <div class="d-pad-top">
+        <!-- Power button (top): asks are you sure you want to turn the tv off? -->
+        <button type="button" class="btn btn-top" id="btn-power" title="Turn TV Off" aria-label="Turn TV Off">
+          <div class="icon-power"></div>
+        </button>
+
+        <!-- LinkedIn button (left) -->
+        <a href="https://www.linkedin.com/in/jamiedchen/" target="_blank" rel="noopener noreferrer" class="btn btn-left" id="btn-linkedin" title="LinkedIn" aria-label="LinkedIn">
+          <img src="assets/linkedin.png" alt="LinkedIn" class="remote-btn-img" />
+        </a>
+
+        <!-- Instagram button (bottom/middle) -->
+        <a href="https://www.instagram.com/djamiechen/" target="_blank" rel="noopener noreferrer" class="btn btn-bottom" id="btn-instagram" title="Instagram" aria-label="Instagram">
+          <img src="assets/instagram.jpg" alt="Instagram" class="remote-btn-img" />
+        </a>
+
+        <!-- Email button (right): opens Gmail directly to Jamie Chen -->
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=djamiechen@gmail.com" target="_blank" rel="noopener noreferrer" class="btn btn-right" id="btn-email" title="Email (Gmail)" aria-label="Email (Gmail)">
+          <img src="assets/email.png" alt="Email" class="remote-btn-img" />
+        </a>
+      </div>
+
+      <!-- Mid sides controls decoration -->
+      <div class="mid-controls">
+        <div class="bt-btn"></div>
+        <div class="start-label">CONTACT</div>
+        <div class="start-btn"></div>
+      </div>
+
+      <!-- Big ON/OFF pad -->
+      <label for="remote-toggle" class="big-pad" id="remote-big-pad" title="Click to toggle remote ON/OFF">
+        <div class="notch n-top"></div>
+        <div class="notch n-bottom"></div>
+        <div class="notch n-left"></div>
+        <div class="notch n-right"></div>
+        <span class="status-text"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TV Off Modal Dialog
+       ═══════════════════════════════════════ -->
+  <div id="tv-off-modal" class="tv-modal-overlay">
+    <div class="tv-modal-box">
+      <div class="tv-modal-icon">📺</div>
+      <h3>Turn off the TV?</h3>
+      <p>Are you sure you want to turn the TV off?</p>
+      <div class="tv-modal-actions">
+        <button type="button" id="tv-confirm-yes" class="tv-btn tv-btn-danger">Yes, Turn Off</button>
+        <button type="button" id="tv-confirm-no" class="tv-btn tv-btn-cancel">No, Go Back</button>
+      </div>
+    </div>
+  </div>
+  <div id="tv-screen-off" class="tv-screen-off"></div>
+  <div id="tv-goodbye-screen" class="tv-goodbye-screen">
+    <h2>📺 TV Turned Off</h2>
+    <p>Thanks for visiting Jamie's Portfolio!</p>
+    <button type="button" id="tv-turn-on-again" class="tv-turn-on-btn">Turn TV Back On ⚡</button>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       Google Chrome Site Permission Dialog (Sound)
+       ═══════════════════════════════════════ -->
+  <div id="chrome-permission-prompt" class="chrome-perm-overlay" role="dialog" aria-modal="true" aria-labelledby="chrome-perm-origin">
+    <div class="chrome-perm-card">
+      <div class="chrome-perm-header">
+        <div class="chrome-perm-origin-wrap">
+          <svg class="chrome-perm-lock" viewBox="0 0 24 24" width="16" height="16" fill="#5f6368">
+            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+          </svg>
+          <span class="chrome-perm-origin" id="chrome-perm-origin">localhost:8080</span>
+          <span class="chrome-perm-wants">wants to</span>
+        </div>
+        <button type="button" class="chrome-perm-close" id="perm-close-btn" title="Close">✕</button>
+      </div>
+      <div class="chrome-perm-body">
+        <div class="chrome-perm-icon-bubble">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="#1a73e8">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+          </svg>
+        </div>
+        <div class="chrome-perm-info">
+          <div class="chrome-perm-label">Play sound</div>
+          <div class="chrome-perm-sub">Allow background audio & music</div>
+        </div>
+      </div>
+      <div class="chrome-perm-actions">
+        <button type="button" class="chrome-perm-btn btn-block" id="perm-block-btn">Block</button>
+        <button type="button" class="chrome-perm-btn btn-allow" id="perm-allow-btn">Allow</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       Cloud Shader Background (Aceternity UI)
+       ═══════════════════════════════════════ -->
+  <canvas id="cloud-canvas"></canvas>
+
+  <!-- ═══════════════════════════════════════
+       Scripts (order matters)
+       ═══════════════════════════════════════ -->
+  <script src="cloud-shader.js"></script>
+  <script src="flipping-board.js"></script>
+  <script src="avatar.js"></script>
+  <script src="bubbles.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
