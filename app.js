@@ -28,12 +28,12 @@ const App = {
   // Portfolio links (10 radial bubbles)
   PORTFOLIO_LINKS: [
     { title: 'Get to know Jamie Again',     url: 'https://canva.link/50kiakbew7sqf70' },
-    { title: 'DECA ICDC Report',            url: 'https://canva.link/u24wtv2bah1k2gd' },
+    { title: 'DECA ICDC Report',            url: 'https://canva.link/mx9tk5k88jsbgel' },
     { title: 'DECA ICDC Slides',            url: 'https://canva.link/vcnjg5nixm8c9pz' },
-    { title: 'My Resume',                    url: 'https://canva.link/zn7e60sbnx5lqyq' },
+    { title: 'My Resume',                    url: 'https://canva.link/h4nv8c463fl6r59' },
     { title: 'Asia Consulting Pitch',        url: 'https://canva.link/t70yi8uq7v8dfm1' },
     { title: 'B3 Investors Bayfair',         url: 'https://canva.link/4ie3kx7293r8q9s' },
-    { title: 'Fusion Marketing',             url: 'https://canva.link/k27ak1xz11iubbb' },
+    { title: 'Fusion Marketing',             url: 'https://canva.link/wldqghskn356nx7' },
     { title: 'Youth Leadership',             url: 'https://canva.link/5hczx8vsha6dy78' },
     { title: 'Irvington Fusion Pitch',       url: 'https://canva.link/n4cqb38wg15nbdh' },
     { title: 'B3 Investors Summary',         url: 'https://canva.link/gtpsjl9ljdb9w0p' },
