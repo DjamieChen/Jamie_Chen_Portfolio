@@ -1,4 +1,4 @@
-/* Hamster behavior patch: smaller, always behind portfolio text, and no corner backflips. */
+/* Hamster behavior patch: smaller, behind content, no backflips, and tight to viewport edges. */
 (() => {
   const style = document.createElement('style');
   style.textContent = `
@@ -35,21 +35,21 @@
 
   if (typeof HamsterRunner === 'undefined') return;
 
-  // The visible wheel is now 72px (15em × 4.8px).
+  // 72px wheel. Let 24px of it sit outside the viewport so it visually hugs
+  // the screen border instead of floating inward with a large gap.
   HamsterRunner._wheelSize = 72;
+  HamsterRunner._edgeOverlap = 24;
   HamsterRunner._speed = 1.7;
 
-  // Replace the perimeter step so the runner translates around the screen
-  // without rotating the whole hamster/wheel at corners. This eliminates the
-  // occasional apparent backflip caused by 90°/360° orientation transitions.
   HamsterRunner._step = function () {
     if (!this._running || !this._el) return;
 
     const wheelSize = this._wheelSize || 72;
-    const minX = 0;
-    const maxX = Math.max(0, window.innerWidth - wheelSize);
-    const minY = 0;
-    const maxY = Math.max(0, window.innerHeight - wheelSize);
+    const overlap = this._edgeOverlap || 24;
+    const minX = -overlap;
+    const maxX = Math.max(minX, window.innerWidth - wheelSize + overlap);
+    const minY = -overlap;
+    const maxY = Math.max(minY, window.innerHeight - wheelSize + overlap);
 
     switch (this._edge) {
       case 0: // top: left -> right
@@ -91,7 +91,7 @@
         break;
     }
 
-    // Translation only: never rotate the complete runner.
+    // Translation only: the complete runner never rotates/backflips.
     this._el.style.transform = `translate3d(${this._x}px, ${this._y}px, 0)`;
 
     this._spokeAngle -= this._speed * 3.2;
